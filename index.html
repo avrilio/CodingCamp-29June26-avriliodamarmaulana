@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Life Dashboard | Avrilio</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+
+    <!-- Storage error / degraded-mode banner -->
+    <div id="storage-error-banner" hidden role="alert" aria-live="polite">
+      <span id="storage-error-message">
+        Local storage is unavailable. Your changes will not be saved beyond this session.
+      </span>
+    </div>
+
+    <!-- Page header with theme toggle -->
+    <header class="app-header" role="banner">
+      <h1 class="app-title">Life Dashboard</h1>
+      <button
+        id="theme-toggle"
+        class="theme-toggle-btn"
+        type="button"
+        aria-label="Toggle light/dark theme"
+        aria-pressed="false"
+      >
+        <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+        <span class="theme-toggle-label">Dark Mode</span>
+      </button>
+    </header>
+
+    <!-- Main dashboard grid -->
+    <main id="dashboard" class="dashboard-grid" role="main">
+
+      <!-- Greeting Widget -->
+      <section
+        id="greeting-widget"
+        class="widget-card"
+        aria-labelledby="greeting-heading"
+      >
+        <header class="widget-header">
+          <h2 id="greeting-heading" class="widget-title">Greeting</h2>
+        </header>
+        <div class="widget-body">
+          <p id="greeting-text" class="greeting-text" aria-live="polite"></p>
+          <p id="greeting-time" class="greeting-time" aria-live="polite"></p>
+          <p id="greeting-date" class="greeting-date"></p>
+          <form id="greeting-name-form" class="greeting-name-form" novalidate>
+            <label for="greeting-name-input" class="visually-hidden">Your name</label>
+            <input
+              type="text"
+              id="greeting-name-input"
+              class="text-input"
+              placeholder="Enter your name…"
+              maxlength="50"
+              autocomplete="off"
+              aria-label="Enter your name for the greeting"
+            />
+            <button type="submit" class="btn btn-primary">Save</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Focus Timer Widget -->
+      <section
+        id="timer-widget"
+        class="widget-card"
+        aria-labelledby="timer-heading"
+      >
+        <header class="widget-header">
+          <h2 id="timer-heading" class="widget-title">Focus Timer</h2>
+        </header>
+        <div class="widget-body">
+          <div
+            id="timer-display"
+            class="timer-display"
+            role="timer"
+            aria-live="off"
+            aria-label="Countdown timer"
+          >25:00</div>
+          <div class="timer-controls" role="group" aria-label="Timer controls">
+            <button id="timer-start-btn" type="button" class="btn btn-primary" aria-label="Start timer">Start</button>
+            <button id="timer-stop-btn" type="button" class="btn btn-secondary" aria-label="Stop timer">Stop</button>
+            <button id="timer-reset-btn" type="button" class="btn btn-secondary" aria-label="Reset timer">Reset</button>
+          </div>
+          <form id="timer-duration-form" class="timer-duration-form" novalidate>
+            <label for="timer-duration-input" class="timer-duration-label">Session duration (minutes)</label>
+            <div class="timer-duration-row">
+              <input
+                type="number"
+                id="timer-duration-input"
+                class="text-input timer-duration-input"
+                min="1"
+                max="120"
+                value="25"
+                aria-describedby="timer-duration-error"
+              />
+              <button type="submit" class="btn btn-primary">Set</button>
+            </div>
+            <p id="timer-duration-error" class="field-error" aria-live="polite" hidden></p>
+          </form>
+          <div id="timer-notification" class="timer-notification" role="alert" aria-live="assertive" hidden>
+            <span>Session complete! Great work! 🎉</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- To-Do List Widget -->
+      <section
+        id="todo-widget"
+        class="widget-card"
+        aria-labelledby="todo-heading"
+      >
+        <header class="widget-header">
+          <h2 id="todo-heading" class="widget-title">To-Do List</h2>
+          <div class="sort-control">
+            <label for="todo-sort-select" class="visually-hidden">Sort tasks</label>
+            <select
+              id="todo-sort-select"
+              class="select-input"
+              aria-label="Sort tasks"
+            >
+              <option value="default">Default</option>
+              <option value="az">A–Z</option>
+              <option value="za">Z–A</option>
+              <option value="completedLast">Completed Last</option>
+              <option value="completedFirst">Completed First</option>
+            </select>
+          </div>
+        </header>
+        <div class="widget-body">
+          <form id="todo-add-form" class="todo-add-form" novalidate>
+            <label for="todo-input" class="visually-hidden">New task description</label>
+            <input
+              type="text"
+              id="todo-input"
+              class="text-input"
+              placeholder="Add a new task…"
+              autocomplete="off"
+              aria-label="New task description"
+              aria-describedby="todo-add-error"
+            />
+            <button type="submit" class="btn btn-primary" aria-label="Add task">Add</button>
+          </form>
+          <p id="todo-add-error" class="field-error" aria-live="polite" hidden></p>
+          <ul
+            id="todo-list"
+            class="todo-list"
+            role="list"
+            aria-label="Task list"
+            aria-live="polite"
+          ></ul>
+          <p id="todo-empty" class="empty-state" hidden>No tasks yet. Add one above!</p>
+        </div>
+      </section>
+
+      <!-- Quick Links Widget -->
+      <section
+        id="quicklinks-widget"
+        class="widget-card"
+        aria-labelledby="quicklinks-heading"
+      >
+        <header class="widget-header">
+          <h2 id="quicklinks-heading" class="widget-title">Quick Links</h2>
+        </header>
+        <div class="widget-body">
+          <form id="quicklinks-add-form" class="quicklinks-add-form" novalidate>
+            <label for="quicklinks-label-input" class="visually-hidden">Link label</label>
+            <input
+              type="text"
+              id="quicklinks-label-input"
+              class="text-input"
+              placeholder="Label (e.g. GitHub)"
+              autocomplete="off"
+              aria-label="Link label"
+              aria-describedby="quicklinks-label-error"
+            />
+            <p id="quicklinks-label-error" class="field-error" aria-live="polite" hidden></p>
+            <label for="quicklinks-url-input" class="visually-hidden">Link URL</label>
+            <input
+              type="url"
+              id="quicklinks-url-input"
+              class="text-input"
+              placeholder="URL (https://…)"
+              autocomplete="off"
+              aria-label="Link URL"
+              aria-describedby="quicklinks-url-error"
+            />
+            <p id="quicklinks-url-error" class="field-error" aria-live="polite" hidden></p>
+            <button type="submit" class="btn btn-primary">Add Link</button>
+          </form>
+          <div
+            id="quicklinks-grid"
+            class="quicklinks-grid"
+            role="list"
+            aria-label="Quick links"
+          ></div>
+          <p id="quicklinks-empty" class="empty-state" hidden>No links saved. Add one above!</p>
+        </div>
+      </section>
+
+    </main>
+
+    <script src="js/app.js" defer></script>
+  </body>
+</html>
